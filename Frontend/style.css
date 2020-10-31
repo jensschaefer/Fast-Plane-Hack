@@ -1,0 +1,15 @@
+.alert {
+    color: red;
+}
+
+.invisible {
+    display: none;
+}
+
+.row {
+    margin: 30px;
+}
+
+.btn-success {
+    margin-top: 20px;
+}

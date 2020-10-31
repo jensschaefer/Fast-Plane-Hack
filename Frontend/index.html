@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Plane Hack</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+<div class="row">
+    <div class="col-lg-offset-2">
+        <h1>Did the Plane Get Hacked?</h1>
+        <fieldset>
+            <label>
+                <input type="checkbox" id="planeGetsHacked">
+                Click to hack plane
+            </label>
+        </fieldset>
+        <button class="btn-primary" id="serverRequest" onclick="myTask()">Ask Server if the Plane got Hacked</button>
+        <h1 id="res" class="invisible">Server Responds:
+            <span id="Alert" class="text-danger"></span>
+            <span id="Safe" class="text-success"></span>
+            <br>
+            <button class="btn-success" onclick="again()">Try Again</button>
+        </h1>
+    </div>
+</div>
+<script>
+    const requestButton = document.getElementById("serverRequest");
+
+    const myTask = async () => {
+        const isHacking = document.getElementById("planeGetsHacked").checked;
+        const response = await fetch(`http://localhost:3000/?hacked=${isHacking}`);
+        const jsonRes = await response.json();
+        requestButton.disabled = true;
+        requestButton.className = "btn-disabled";
+
+        if (jsonRes.gotHacked) {
+            document.getElementById("res").classList.remove("invisible");
+            document.getElementById("Alert").innerHTML = "Alert! The Plane Got Hacked!";
+        } else {
+            document.getElementById("res").classList.remove("invisible");
+            document.getElementById("Safe").innerHTML = "No Worries, Plane didn't get hacked";
+        }
+    }
+
+    const again = () => {
+        document.getElementById("res").classList.add("invisible");
+        document.getElementById("Safe").innerHTML = "";
+        document.getElementById("Alert").innerHTML = "";
+        requestButton.disabled = false;
+        requestButton.className = "btn-primary";
+    }
+</script>
+</body>
+</html>
