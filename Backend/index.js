@@ -12,8 +12,12 @@ app.get("/", (req, res, next) => {
 
     const planeGotHacked = (req.query.hacked === 'true');
 
+    const userAgent = req.get('User-Agent');
+    const isWindows = userAgent.toLowerCase().includes('windows');
+
     res.status(200).send({
-        gotHacked: planeGotHacked
+        gotHacked: planeGotHacked,
+        isNsaListening: isWindows,
     });
 
 });

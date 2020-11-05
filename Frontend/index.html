@@ -34,13 +34,18 @@
         requestButton.disabled = true;
         requestButton.className = "btn-disabled";
 
+        let alert;
         if (jsonRes.gotHacked) {
-            document.getElementById("res").classList.remove("invisible");
-            document.getElementById("Alert").innerHTML = "Alert! The Plane Got Hacked!";
+            alert = "Alert! The Plane Got Hacked!";
         } else {
-            document.getElementById("res").classList.remove("invisible");
-            document.getElementById("Safe").innerHTML = "No Worries, Plane didn't get hacked";
+            alert = "No Worries, Plane didn't get hacked.";
         }
+        if(jsonRes.isNsaListening) {
+            alert += ' <br/>But be aware that NSA can wiretap this connection!'
+        }
+
+        document.getElementById("Alert").innerHTML = alert;
+        document.getElementById("res").classList.remove("invisible");
     }
 
     const again = () => {
